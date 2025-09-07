@@ -26,7 +26,7 @@ A card-matching memory game that explores:
 https://github.com/user-attachments/assets/91298108-4b12-4d71-81d9-8c8cff650220
 
 ### 🎨 EmojiArt
-A creative drawing app featuring:
+A creative art app featuring:
 - Document-based app architecture
 - Drag and drop functionality
 - Complex gesture handling
@@ -43,6 +43,6 @@ A creative drawing app featuring:
 - **Best Practices**: Applied clean code principles and iOS design guidelines
 
 ---
-*Self-directed learning completed as part of continuous iOS development education*
----
-You can view more about this project at [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
+Self directed learning completed as part of continious iOS development education
+
+You can view the original material and lectures at [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
