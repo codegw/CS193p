@@ -3,7 +3,6 @@
   <h1>CS193p</h1>
   <p>
     Projects created for the online version of Stanford's CS193p - Developing Apps for iOS course for 2023
-    [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
   </p>
 </div>
 
@@ -40,3 +39,4 @@ A creative drawing app featuring:
 
 ---
 *Self-directed learning completed as part of continuous iOS development education*
+You can view more about this project at [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
