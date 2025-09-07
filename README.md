@@ -12,6 +12,8 @@
 
 This repository contains my implementations of the core projects from Stanford's CS193p course, demonstrating progressive learning of iOS development concepts and SwiftUI patterns.
 
+<img src="assets/CS193pProjects.png" alt= "Memorize and Emoji Art Applications from course">
+
 ## Projects
 
 ### 🃏 Memorize!
