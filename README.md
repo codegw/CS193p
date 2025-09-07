@@ -22,7 +22,8 @@ A card-matching memory game that explores:
 - MVVM architecture patterns
 - State management and data flow
 - Custom animations and transitions
-- Generic programming concepts
+
+https://github.com/user-attachments/assets/91298108-4b12-4d71-81d9-8c8cff650220
 
 ### 🎨 EmojiArt
 A creative drawing app featuring:
