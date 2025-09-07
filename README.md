@@ -32,6 +32,8 @@ A creative drawing app featuring:
 - Complex gesture handling
 - Integration with system frameworks
 
+<img src="assets/EmojiArt.png" alt= "EmojiArt application">
+
 ## Key Learning Outcomes
 
 - **SwiftUI Learning**: Built proficiency in declarative UI development
@@ -42,4 +44,5 @@ A creative drawing app featuring:
 
 ---
 *Self-directed learning completed as part of continuous iOS development education*
+---
 You can view more about this project at [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
