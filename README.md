@@ -43,6 +43,11 @@ A creative art app featuring:
 - **Best Practices**: Applied clean code principles and iOS design guidelines
 
 ---
-Self directed learning completed as part of continious iOS development education
 
-You can view the original material and lectures at [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
+## Information
+Course materials and assignments are © Stanford University. 
+Original course content available at: [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
+
+These implementations are my own work completed for educational purposes
+
+These projects were completed in 2024. Some Swift syntax may reflect course timing and could be updated with newer iOS versions.
