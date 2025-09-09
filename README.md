@@ -42,6 +42,10 @@ A creative art app featuring:
 - **iOS Fundamentals**: Explored view lifecycle, navigation, and system integration
 - **Best Practices**: Applied clean code principles and iOS design guidelines
 
+In addition to the course, creating notes also helped me document my journey, which reinforced my understanding and retention of the concepts learned. 
+
+<img src="assets/Notes.png" alt= "Notes about the applications for the course">
+
 ---
 
 ## Information
