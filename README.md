@@ -44,7 +44,7 @@ A creative art app featuring:
 
 In addition to the course, creating notes also helped me document my journey, which reinforced my understanding and retention of the concepts learned. 
 
-<img src="assets/Notes.png" alt= "Notes about the applications for the course">
+<img src="assets/NotesPages.png" alt= "Notes about the applications for the course">
 
 ---
 
