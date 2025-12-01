@@ -50,7 +50,9 @@ In addition to the course, creating notes also helped me document my journey, wh
 
 ## Information
 Course materials and assignments are © Stanford University. 
-Original course content available at: [cs193p.stanford.edu/2023](https://cs193p.stanford.edu/2023)
+Original course content available at [cs193p.stanford.edu/2023 ↗](https://cs193p.stanford.edu/2023)
+
+Find a 2025 update to the course here [cs193p.stanford.edu/2023 ↗](https://cs193p.stanford.edu/2023)
 
 These implementations are my own work completed for educational purposes
 
