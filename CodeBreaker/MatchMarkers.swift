@@ -31,9 +31,32 @@ struct MatchMarkers: View {
     
     func matchMarker(peg: Int) -> some View {
         let exactCount: Int = matches.count(where: { match in match == .exact })
-        let foundCount: Int = matches.count(where: { match in match == .nomatch })
+        let foundCount: Int = matches.count(where: { match in match != .nomatch })
         return Circle()
             .fill(exactCount > peg ? Color.primary : Color.clear)
             .strokeBorder(foundCount > peg ? Color.primary : Color.clear, lineWidth: 2).aspectRatio(1, contentMode: .fit)
     }
+}
+
+#Preview {
+    VStack {
+        HStack {
+            Circle()
+            Circle()
+            Circle()
+            Circle()
+            MatchMarkers(matches: [.exact, .inexact, .nomatch, .exact])
+            
+        }
+        HStack {
+            Circle()
+            Circle()
+            Circle()
+            Circle()
+            Circle()
+            MatchMarkers(matches: [.inexact, .inexact, .nomatch, .exact])
+        }
+    }
+    .padding()
+    
 }
