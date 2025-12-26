@@ -26,6 +26,10 @@ struct MatchMarkers: View {
                 matchMarker(peg: 2)
                 matchMarker(peg: 3)
             }
+            VStack {
+                matchMarker(peg: 4)
+                matchMarker(peg: 5)
+            }
         }
     }
     
@@ -55,6 +59,21 @@ struct MatchMarkers: View {
             Circle()
             Circle()
             MatchMarkers(matches: [.inexact, .inexact, .nomatch, .exact])
+        }
+        HStack {
+            Circle()
+            Circle()
+            Circle()
+            Circle()
+            Circle()
+            MatchMarkers(matches: [.inexact, .inexact, .nomatch, .exact, .inexact, .exact])
+        }
+        HStack {
+            Circle()
+            Circle()
+            Circle()
+            Circle()
+            MatchMarkers(matches: [.inexact, .inexact, .nomatch, .exact, .exact])
         }
     }
     .padding()
