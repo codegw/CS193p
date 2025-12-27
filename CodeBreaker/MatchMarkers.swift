@@ -41,10 +41,6 @@ struct MatchMarkers: View {
             .fill(exactCount > peg ? Color.primary : Color.clear)
             .strokeBorder(foundCount > peg ? Color.primary : Color.clear, lineWidth: 2).aspectRatio(1, contentMode: .fit)
     }
-    
-
-    
-    
 }
 
 #Preview {
