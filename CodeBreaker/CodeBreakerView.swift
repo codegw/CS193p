@@ -11,17 +11,30 @@ struct CodeBreakerView: View {
     @State var game = CodeBreaker()
     
     var body: some View {
-        VStack {
-            view(for: game.masterCode)
-            ScrollView {
-                view(for: game.guess)
-                ForEach(game.attempts.indices.reversed(), id: \.self) { index in
-                    view(for: game.attempts[index])
+        NavigationStack {
+            VStack {
+                view(for: game.masterCode)
+                ScrollView {
+                    view(for: game.guess)
+                    ForEach(game.attempts.indices.reversed(), id: \.self) { index in
+                        view(for: game.attempts[index])
+                    }
+                }
+
+            }
+            .navigationTitle("CodeBreaker")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button {
+                    withAnimation {
+                        game.reset()
+                    }
+                } label: {
+                    Image(systemName: "arrow.trianglehead.counterclockwise")
                 }
             }
-            
+            .padding()
         }
-        .padding()
     }
     
     var guessButton: some View {

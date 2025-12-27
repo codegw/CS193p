@@ -45,6 +45,11 @@ struct CodeBreaker {
     var canSubmitGuess: Bool {
         !isAttempted(guess) && guess.isOnePegChosen()
     }
+    
+    mutating func reset() {
+        masterCode.randomize(from: pegChoices)
+        attempts.removeAll()
+    }
 }
 
 struct Code {
