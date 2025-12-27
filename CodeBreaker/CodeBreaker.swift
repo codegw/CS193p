@@ -37,6 +37,14 @@ struct CodeBreaker {
             guess.pegs[index] = pegChoices.first ?? Code.missing
         }
     }
+    
+    func isAttempted(_ guess: Code) -> Bool {
+        attempts.contains { $0.pegs == guess.pegs }
+    }
+    
+    var canSubmitGuess: Bool {
+        !isAttempted(guess) && guess.isOnePegChosen()
+    }
 }
 
 struct Code {
@@ -83,5 +91,9 @@ struct Code {
             }
         }
         return results
+    }
+    
+    func isOnePegChosen() -> Bool {
+        pegs.contains { $0 != Code.missing }
     }
 }

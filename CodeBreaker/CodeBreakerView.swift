@@ -33,6 +33,7 @@ struct CodeBreakerView: View {
             Text("Guess")
                 .font(.headline)
         }
+        .disabled(!game.canSubmitGuess)
     }
     
     func view(for code: Code) -> some View {
