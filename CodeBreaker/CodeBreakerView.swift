@@ -44,7 +44,9 @@ struct CodeBreakerView: View {
             }
         } label: {
             Text("Guess")
-                .font(.headline)
+                .font(.title)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
         }
         .disabled(!game.canSubmitGuess)
     }

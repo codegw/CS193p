@@ -11,15 +11,19 @@ import SwiftUI
 typealias Peg = Color
 
 struct CodeBreaker {
-    static let numOfPegs = 4
+    var numOfPegs: Int
     
-    var masterCode: Code = Code(kind: .master, pegCount: numOfPegs)
-    var guess: Code = Code(kind: .guess, pegCount: numOfPegs)
+    var masterCode: Code
+    var guess: Code
     var attempts: [Code] = []
     let pegChoices: [Peg]
     
     init(pegChoices: [Peg] = [.red, .green, .blue, .yellow]) {
+        self.numOfPegs = Int.random(in: 3...6)
         self.pegChoices = pegChoices
+        self.masterCode = Code(kind: .master, pegCount: numOfPegs)
+        self.guess = Code(kind: .guess, pegCount: numOfPegs)
+        
         masterCode.randomize(from: pegChoices)
         print(masterCode)
     }
@@ -49,6 +53,11 @@ struct CodeBreaker {
     }
     
     mutating func reset() {
+        numOfPegs = Int.random(in: 3...6)
+        
+        self.masterCode = Code(kind: .master, pegCount: numOfPegs)
+        self.guess = Code(kind: .guess, pegCount: numOfPegs)
+        
         masterCode.randomize(from: pegChoices)
         attempts.removeAll()
     }
@@ -73,7 +82,7 @@ struct Code {
     }
     
     mutating func randomize(from pegChoices: [Peg]) {
-        for index in pegChoices.indices {
+        for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missing
         }
     }
