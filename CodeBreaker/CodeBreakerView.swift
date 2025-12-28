@@ -63,7 +63,7 @@ struct CodeBreakerView: View {
                     }
                     .contentShape(Rectangle())
                     .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(code.pegs[index])
+                    .foregroundStyle(toColor(code.pegs[index]))
                     .onTapGesture {
                         if code.kind == .guess {
                             game.changeGuessPeg(at: index)
@@ -79,6 +79,30 @@ struct CodeBreakerView: View {
         }
     }
 }
+
+public func toColor(_ name: String) -> Color {
+    switch name {
+    case "red":
+        return Color.red
+    case "orange":
+        return Color.orange
+    case "yellow":
+        return Color.yellow
+    case "cyan":
+        return Color.cyan
+    case "blue":
+        return Color.blue
+    case "green":
+        return Color.green
+    case "purple":
+        return Color.purple
+    case "clear":
+        return Color.clear
+    default:
+        return Color.blue
+    }
+}
+
 
 
 #Preview {

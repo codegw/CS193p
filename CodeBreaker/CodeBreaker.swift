@@ -8,7 +8,7 @@
 import SwiftUI
 
 //Quite literally an alias!
-typealias Peg = Color
+typealias Peg = String
 
 struct CodeBreaker {
     var numOfPegs: Int
@@ -18,7 +18,7 @@ struct CodeBreaker {
     var attempts: [Code] = []
     let pegChoices: [Peg]
     
-    init(pegChoices: [Peg] = [.red, .green, .blue, .yellow]) {
+    init(pegChoices: [Peg] = ["red", "green", "blue", "yellow"]) {
         self.numOfPegs = Int.random(in: 3...6)
         self.pegChoices = pegChoices
         self.masterCode = Code(kind: .master, pegCount: numOfPegs)
@@ -72,7 +72,7 @@ struct Code {
         self.pegs = Array(repeating: Code.missing, count: pegCount)
     }
     
-    static let missing: Peg = .clear
+    static let missing: Peg = "clear"
     
     enum Kind: Equatable {
         case master
