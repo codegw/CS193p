@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 //Quite literally an alias!
 typealias Peg = String
 
@@ -18,9 +17,17 @@ struct CodeBreaker {
     var attempts: [Code] = []
     let pegChoices: [Peg]
     
-    init(pegChoices: [Peg] = ["red", "green", "blue", "yellow"]) {
+    let pegLibrary: [[Peg]] = [
+        ["red", "green", "blue", "yellow"],
+        ["😀", "😊", "🥰", "😭"],
+        ["🍎", "🥑", "🍍", "🍓"]
+    ]
+    
+    init() {
+        let choices = pegLibrary.randomElement() ?? ["red", "green", "blue", "yellow"]
+        
         self.numOfPegs = Int.random(in: 3...6)
-        self.pegChoices = pegChoices
+        self.pegChoices = choices
         self.masterCode = Code(kind: .master, pegCount: numOfPegs)
         self.guess = Code(kind: .guess, pegCount: numOfPegs)
         
