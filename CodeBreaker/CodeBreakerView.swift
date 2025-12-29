@@ -8,19 +8,27 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    @State var game = CodeBreaker()
+    // MARK: Data Owned by Me
+    @State private var game = CodeBreaker()
+    @State private var selection: Int = 0
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
                 view(for: game.masterCode)
                 ScrollView {
-                    view(for: game.guess)
+                    if !game.isOver {
+                        view(for: game.guess)
+                    }
                     ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                         view(for: game.attempts[index])
                     }
                 }
-
+                PegChooser(choices: game.pegChoices) { peg in
+                    game.setGuessPeg(peg, at: selection)
+                    selection = (selection + 1) % game.masterCode.pegs.count
+                }
             }
             .navigationTitle("CodeBreaker")
             .navigationBarTitleDisplayMode(.inline)
@@ -41,43 +49,21 @@ struct CodeBreakerView: View {
         Button{
             withAnimation {
                 game.attemptGuess()
+                selection = 0
             }
         } label: {
             Text("Guess")
-                .font(.title)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+                
         }
+        .font(.system(size: GuessButton.maximumFontSize))
+        .minimumScaleFactor(GuessButton.scaleFactor)
         .disabled(!game.canSubmitGuess)
     }
     
     func view(for code: Code) -> some View {
         HStack {
-            ForEach(code.pegs.indices, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.white)
-                    .overlay {
-                        switch code.pegs[index] {
-                        case .color(let color):
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(color)
-                        case .emoji(let emoji):
-                            Text(emoji)
-                                .font(.largeTitle)
-                                
-                        case .empty:
-                            RoundedRectangle(cornerRadius: 10)
-                                .strokeBorder(Color.gray)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .aspectRatio(1, contentMode: .fit)
-                    .onTapGesture {
-                        if code.kind == .guess {
-                            game.changeGuessPeg(at: index)
-                        }
-                    }
-            }
+            CodeView(code: code, selection: $selection)
+            
             Rectangle().foregroundStyle(Color.clear).aspectRatio(1, contentMode: .fit)
                 .overlay {
                     if let matches = code.matches {
@@ -90,32 +76,49 @@ struct CodeBreakerView: View {
                 }
         }
     }
-}
-
-public func toColor(_ name: String) -> Color {
-    switch name {
-    case "red":
-        return Color.red
-    case "orange":
-        return Color.orange
-    case "yellow":
-        return Color.yellow
-    case "cyan":
-        return Color.cyan
-    case "blue":
-        return Color.blue
-    case "green":
-        return Color.green
-    case "purple":
-        return Color.purple
-    case "clear":
-        return Color.clear
-    default:
-        return Color.blue
+    
+    struct GuessButton {
+        static let minimumFontSize: CGFloat = 8
+        static let maximumFontSize: CGFloat = 80
+        static let scaleFactor = minimumFontSize / maximumFontSize
+    }
+    
+    struct Selection {
+        static let border: CGFloat = 5
+        static let cornerRadius: CGFloat = 10
+        static let selectionColor: Color = Color.gray(0.85)
+        static let shape = RoundedRectangle(cornerRadius: cornerRadius)
     }
 }
 
-
+extension Color {
+    static func gray(_ brightness: CGFloat) -> Color {
+        return Color(hue: 148/360, saturation: 0 ,brightness: brightness)
+    }
+    
+    static func toColor(_ name: String) -> Color {
+        switch name {
+        case "red":
+            return Color.red
+        case "orange":
+            return Color.orange
+        case "yellow":
+            return Color.yellow
+        case "cyan":
+            return Color.cyan
+        case "blue":
+            return Color.blue
+        case "green":
+            return Color.green
+        case "purple":
+            return Color.purple
+        case "clear":
+            return Color.clear
+        default:
+            return Color.blue
+        }
+    }
+}
 
 #Preview {
     CodeBreakerView()
