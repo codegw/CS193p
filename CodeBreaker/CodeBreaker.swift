@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
-//Quite literally an alias!
-typealias Peg = String
+
+enum Peg: Equatable {
+    case color(Color)
+    case emoji(String)
+    case empty
+}
 
 struct CodeBreaker {
     var numOfPegs: Int
@@ -15,16 +19,16 @@ struct CodeBreaker {
     var masterCode: Code
     var guess: Code
     var attempts: [Code] = []
-    let pegChoices: [Peg]
+    var pegChoices: [Peg]
     
     let pegLibrary: [[Peg]] = [
-        ["red", "green", "blue", "yellow"],
-        ["😀", "😊", "🥰", "😭"],
-        ["🍎", "🥑", "🍍", "🍓"]
+        [.color(.red), .color(.green), .color(.blue), .color(.yellow)],
+        [.emoji("😀"), .emoji("😊"), .emoji("🥰"), .emoji("😭")],
+        [.emoji("🍎"), .emoji("🥑"), .emoji("🍍"), .emoji("🍓")]
     ]
     
     init() {
-        let choices = pegLibrary.randomElement() ?? ["red", "green", "blue", "yellow"]
+        let choices = pegLibrary.randomElement() ?? [.color(.red), .color(.green), .color(.blue), .color(.yellow)]
         
         self.numOfPegs = Int.random(in: 3...6)
         self.pegChoices = choices
@@ -60,12 +64,7 @@ struct CodeBreaker {
     }
     
     mutating func reset() {
-        numOfPegs = Int.random(in: 3...6)
-        
-        self.masterCode = Code(kind: .master, pegCount: numOfPegs)
-        self.guess = Code(kind: .guess, pegCount: numOfPegs)
-        
-        masterCode.randomize(from: pegChoices)
+        self = CodeBreaker()
         attempts.removeAll()
     }
 }
@@ -79,7 +78,7 @@ struct Code {
         self.pegs = Array(repeating: Code.missing, count: pegCount)
     }
     
-    static let missing: Peg = "clear"
+    static let missing: Peg = .empty
     
     enum Kind: Equatable {
         case master

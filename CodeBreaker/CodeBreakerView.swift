@@ -55,15 +55,25 @@ struct CodeBreakerView: View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 10)
+                    .foregroundStyle(.white)
                     .overlay {
-                        if code.pegs[index] == Code.missing {
+                        switch code.pegs[index] {
+                        case .color(let color):
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(color)
+
+                        case .emoji(let emoji):
+                            Text(emoji)
+                                .font(.largeTitle)
+                                
+
+                        case .empty:
                             RoundedRectangle(cornerRadius: 10)
                                 .strokeBorder(Color.gray)
                         }
                     }
                     .contentShape(Rectangle())
                     .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(toColor(code.pegs[index]))
                     .onTapGesture {
                         if code.kind == .guess {
                             game.changeGuessPeg(at: index)
