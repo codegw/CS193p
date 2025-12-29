@@ -78,5 +78,4 @@ struct MatchMarkers: View {
         }
     }
     .padding()
-    
 }

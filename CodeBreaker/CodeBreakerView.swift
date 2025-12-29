@@ -61,12 +61,10 @@ struct CodeBreakerView: View {
                         case .color(let color):
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundStyle(color)
-
                         case .emoji(let emoji):
                             Text(emoji)
                                 .font(.largeTitle)
                                 
-
                         case .empty:
                             RoundedRectangle(cornerRadius: 10)
                                 .strokeBorder(Color.gray)
@@ -80,10 +78,14 @@ struct CodeBreakerView: View {
                         }
                     }
             }
-            MatchMarkers(matches: code.matches)
+            Rectangle().foregroundStyle(Color.clear).aspectRatio(1, contentMode: .fit)
                 .overlay {
-                    if code.kind == .guess {
-                        guessButton
+                    if let matches = code.matches {
+                        MatchMarkers(matches: matches)
+                    } else {
+                        if code.kind == .guess {
+                            guessButton
+                        }
                     }
                 }
         }
