@@ -26,10 +26,10 @@ struct PegView: View {
                 case .emoji(let emoji):
                     Text(emoji)
                         .font(.largeTitle)
-                    
+                
                 case .empty:
                     pegShape
-                        .strokeBorder(Color.gray)
+                        .foregroundStyle(.clear)
                 }
             }
             .contentShape(pegShape)
