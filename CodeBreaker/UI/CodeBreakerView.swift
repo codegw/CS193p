@@ -55,18 +55,18 @@ struct CodeBreakerView: View {
     
     var guessButton: some View {
         Button{
-            withAnimation {
+            withAnimation(.guess){
                 game.attemptGuess()
                 selection = 0
             }
         } label: {
             Text("Guess")
-                
         }
         .font(.system(size: GuessButton.maximumFontSize))
         .minimumScaleFactor(GuessButton.scaleFactor)
         .disabled(!game.canSubmitGuess)
     }
+    
     
     struct GuessButton {
         static let minimumFontSize: CGFloat = 8
@@ -80,6 +80,10 @@ struct CodeBreakerView: View {
         static let selectionColor: Color = Color.gray(0.85)
         static let shape = RoundedRectangle(cornerRadius: cornerRadius)
     }
+}
+
+extension Animation {
+    static let guess = Animation.easeInOut(duration: 3)
 }
 
 extension Color {
