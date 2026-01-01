@@ -31,10 +31,7 @@ struct CodeBreakerView: View {
                         }
                     }
                 }
-                PegChooser(choices: game.pegChoices) { peg in
-                    game.setGuessPeg(peg, at: selection)
-                    selection = (selection + 1) % game.masterCode.pegs.count
-                }
+                PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
             }
             .navigationTitle("CodeBreaker")
             .navigationBarTitleDisplayMode(.inline)
@@ -49,6 +46,11 @@ struct CodeBreakerView: View {
             }
             .padding()
         }
+    }
+    
+    func changePegAtSelection(to peg: Peg) {
+        game.setGuessPeg(peg, at: selection)
+        selection = (selection + 1) % game.masterCode.pegs.count
     }
     
     var guessButton: some View {
