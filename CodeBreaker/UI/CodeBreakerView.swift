@@ -37,8 +37,9 @@ struct CodeBreakerView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button {
-                    withAnimation {
-                        game.reset()
+                    withAnimation(.restart) {
+                        game.restart()
+                        selection = 0
                     }
                 } label: {
                     Image(systemName: "arrow.trianglehead.counterclockwise")
@@ -83,7 +84,9 @@ struct CodeBreakerView: View {
 }
 
 extension Animation {
-    static let guess = Animation.easeInOut(duration: 3)
+    static let codeBreaker = Animation.easeInOut(duration: 1)
+    static let guess = Animation.codeBreaker
+    static let restart = Animation.codeBreaker
 }
 
 extension Color {

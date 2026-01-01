@@ -34,7 +34,6 @@ struct CodeBreaker {
         self.guess = Code(kind: .guess, pegCount: numOfPegs)
 
         masterCode.randomize(from: pegChoices)
-        print(masterCode)
     }
     
     static func randomGame() -> CodeBreaker {
@@ -86,8 +85,10 @@ struct CodeBreaker {
         !isAttempted(guess) && guess.isOnePegChosen()
     }
     
-    mutating func reset() {
+    mutating func restart() {
+        masterCode.kind = .master(isHidden: true)
+        masterCode.randomize(from: pegChoices)
+        guess.reset()
         attempts.removeAll()
-        self = CodeBreaker.randomGame()
     }
 }
