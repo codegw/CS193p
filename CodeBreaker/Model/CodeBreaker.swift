@@ -27,16 +27,26 @@ struct CodeBreaker {
         [.emoji("🍎"), .emoji("🥑"), .emoji("🍍"), .emoji("🍓")]
     ]
     
-    init() {
-        let choices = pegLibrary.randomElement() ?? [.color(.red), .color(.green), .color(.blue), .color(.yellow)]
-        
-        self.numOfPegs = Int.random(in: 3...6)
-        self.pegChoices = choices
+    init(numOfPegs: Int, pegChoices: [Peg]) {
+        self.numOfPegs = numOfPegs
+        self.pegChoices = pegChoices
         self.masterCode = Code(kind: .master(isHidden: true), pegCount: numOfPegs)
         self.guess = Code(kind: .guess, pegCount: numOfPegs)
-        
+
         masterCode.randomize(from: pegChoices)
         print(masterCode)
+    }
+    
+    static func randomGame() -> CodeBreaker {
+        let pegLibrary: [[Peg]] = [
+            [.color(.red), .color(.green), .color(.blue), .color(.yellow)],
+            [.emoji("😀"), .emoji("😊"), .emoji("🥰"), .emoji("😭")],
+            [.emoji("🍎"), .emoji("🥑"), .emoji("🍍"), .emoji("🍓")]
+        ]
+
+        let choices = pegLibrary.randomElement()!
+        let count = Int.random(in: 3...6)
+        return CodeBreaker(numOfPegs: count, pegChoices: choices)
     }
     
     var isOver: Bool {
@@ -77,9 +87,7 @@ struct CodeBreaker {
     }
     
     mutating func reset() {
-        self = CodeBreaker()
         attempts.removeAll()
+        self = CodeBreaker.randomGame()
     }
 }
-
-

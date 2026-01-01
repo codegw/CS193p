@@ -9,14 +9,14 @@ import SwiftUI
 
 struct CodeBreakerView: View {
     // MARK: Data Owned by Me
-    @State private var game = CodeBreaker()
+    @State private var game = CodeBreaker.randomGame()
     @State private var selection: Int = 0
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
-                CodeView(code: game.masterCode, selection: $selection, ancillaryView: { EmptyView() })
+                CodeView(code: game.masterCode)
                 ScrollView {
                     if !game.isOver {
                         CodeView(code: game.guess, selection: $selection) {
@@ -24,13 +24,11 @@ struct CodeBreakerView: View {
                         }
                     }
                     ForEach(game.attempts.indices.reversed(), id: \.self) { index in
-                        CodeView(
-                            code: game.attempts[index],
-                            selection: $selection) {
-                                if let matches = game.attempts[index].matches {
-                                    MatchMarkers(matches: matches)
-                                }
+                        CodeView(code: game.attempts[index]) {
+                            if let matches = game.attempts[index].matches {
+                                MatchMarkers(matches: matches)
                             }
+                        }
                     }
                 }
                 PegChooser(choices: game.pegChoices) { peg in

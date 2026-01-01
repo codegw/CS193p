@@ -16,6 +16,16 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
     
     @ViewBuilder let ancillaryView: () -> AncillaryView
     
+    init(
+        code: Code,
+        selection: Binding<Int> = .constant(-1),
+    @ViewBuilder ancillaryView: @escaping () -> AncillaryView = { EmptyView() }
+    ) {
+        self.code = code
+        self._selection = selection
+        self.ancillaryView = ancillaryView
+    }
+    
     // MARK: - Body
     var body: some View {
         HStack {
