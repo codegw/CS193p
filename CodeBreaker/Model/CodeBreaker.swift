@@ -56,7 +56,7 @@ struct CodeBreaker {
         var attempt = guess
         attempt.kind = .attempt(guess.match(against: masterCode))
         attempts.append(attempt)
-        guess.reset()
+        guess.reset(masterCode.pegs.count)
         if isOver {
             masterCode.kind = .master(isHidden: false)
         }
@@ -88,7 +88,7 @@ struct CodeBreaker {
     mutating func restart() {
         masterCode.kind = .master(isHidden: true)
         masterCode.randomize(from: pegChoices)
-        guess.reset()
+        guess.reset(masterCode.pegs.count)
         attempts.removeAll()
     }
 }

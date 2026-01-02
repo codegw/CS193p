@@ -38,8 +38,8 @@ struct Code {
         }
     }
     
-    mutating func reset() {
-        pegs = Array(repeating: Code.missingPeg, count: 4)
+    mutating func reset(_ pegCount: Int) {
+        pegs = Array(repeating: Code.missingPeg, count: pegCount)
     }
     
     var matches: [Match]? {
