@@ -16,6 +16,9 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
     
     @ViewBuilder let ancillaryView: () -> AncillaryView
     
+    // MARK: Data Owned by Me
+    @Namespace private var selectionNamespace
+    
     init(
         code: Code,
         selection: Binding<Int> = .constant(-1),
@@ -33,10 +36,14 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
                 PegView(peg: code.pegs[index])
                     .padding(Selection.border)
                     .background { // Selection background
-                        if selection == index, code.kind == .guess {
-                            Selection.shape
-                                .foregroundStyle(Selection.selectionColor)
+                        Group {
+                            if selection == index, code.kind == .guess {
+                                Selection.shape
+                                    .foregroundStyle(Selection.selectionColor)
+                                    .matchedGeometryEffect(id: "selection", in: selectionNamespace)
+                            }
                         }
+                        .animation(.selection, value: selection)
                     }
                     .overlay { // Hidden code obscuring
                         Selection.shape.foregroundStyle(code.isHidden ? Color.gray : .clear)
