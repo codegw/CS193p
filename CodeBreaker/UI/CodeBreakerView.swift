@@ -33,9 +33,7 @@ struct CodeBreakerView: View {
                 }
                 if !game.isOver {
                     PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
-                    
-                        .transition(.offset(x: 0, y: 200))
-                        
+                        .transition(.pegChooser)
                 }
             }
             .navigationTitle("CodeBreaker")
@@ -92,6 +90,10 @@ extension Animation {
     static let codeBreaker = Animation.easeInOut(duration: 1)
     static let guess = Animation.codeBreaker
     static let restart = Animation.codeBreaker
+}
+
+extension AnyTransition {
+    static let pegChooser = AnyTransition.offset(x: 0, y: 200)
 }
 
 extension Color {
