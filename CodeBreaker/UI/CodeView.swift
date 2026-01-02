@@ -40,6 +40,7 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
                     }
                     .overlay { // Hidden code obscuring
                         Selection.shape.foregroundStyle(code.isHidden ? Color.gray : .clear)
+                            .animation(nil, value: code.isHidden)
                     }
                     .onTapGesture {
                         if code.kind == .guess {
