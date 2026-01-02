@@ -32,13 +32,13 @@ struct CodeView<AncillaryView>: View where AncillaryView: View {
             ForEach(code.pegs.indices, id: \.self) { index in
                 PegView(peg: code.pegs[index])
                     .padding(Selection.border)
-                    .background {
+                    .background { // Selection background
                         if selection == index, code.kind == .guess {
                             Selection.shape
                                 .foregroundStyle(Selection.selectionColor)
                         }
                     }
-                    .overlay {
+                    .overlay { // Hidden code obscuring
                         Selection.shape.foregroundStyle(code.isHidden ? Color.gray : .clear)
                     }
                     .onTapGesture {
