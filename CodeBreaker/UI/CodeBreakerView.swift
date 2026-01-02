@@ -23,7 +23,8 @@ struct CodeBreakerView: View {
                 ScrollView {
                     if !game.isOver {
                         CodeView(code: game.guess, selection: $selection) {
-                            guessButton
+                            Button("Guess", action: guess).flexibleSystemFont()
+                                .disabled(!game.canSubmitGuess)
                         }
                         .animation(nil, value: game.attempts.count)
                         .opacity(restarting ? 0 : 1)
@@ -47,15 +48,7 @@ struct CodeBreakerView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button {
-                    withAnimation(.restart) {
-                        restarting = true
-                    } completion: {
-                        withAnimation(.restart) {
-                            game.restart()
-                            selection = 0
-                            restarting = false
-                        }
-                    }
+                    restart()
                 } label: {
                     Image(systemName: "arrow.trianglehead.counterclockwise")
                 }
@@ -69,30 +62,28 @@ struct CodeBreakerView: View {
         selection = (selection + 1) % game.masterCode.pegs.count
     }
     
-    var guessButton: some View {
-        Button{
-            withAnimation(.guess){
-                game.attemptGuess()
-                selection = 0
-                hideMostRecentMarkers = true
-            } completion: {
-                withAnimation(.guess) {
-                    hideMostRecentMarkers = false
-                }
+    func guess() {
+        withAnimation(.guess){
+            game.attemptGuess()
+            selection = 0
+            hideMostRecentMarkers = true
+        } completion: {
+            withAnimation(.guess) {
+                hideMostRecentMarkers = false
             }
-        } label: {
-            Text("Guess")
         }
-        .font(.system(size: GuessButton.maximumFontSize))
-        .minimumScaleFactor(GuessButton.scaleFactor)
-        .disabled(!game.canSubmitGuess)
     }
     
-    
-    struct GuessButton {
-        static let minimumFontSize: CGFloat = 8
-        static let maximumFontSize: CGFloat = 80
-        static let scaleFactor = minimumFontSize / maximumFontSize
+    func restart() {
+        withAnimation(.restart) {
+            restarting = true
+        } completion: {
+            withAnimation(.restart) {
+                game.restart()
+                selection = 0
+                restarting = false
+            }
+        }
     }
     
     struct Selection {
@@ -100,50 +91,6 @@ struct CodeBreakerView: View {
         static let cornerRadius: CGFloat = 10
         static let selectionColor: Color = Color.gray(0.85)
         static let shape = RoundedRectangle(cornerRadius: cornerRadius)
-    }
-}
-
-extension Animation {
-    static let codeBreaker = Animation.easeInOut(duration: 0.5)
-    static let guess = Animation.codeBreaker
-    static let restart = Animation.codeBreaker
-}
-
-extension AnyTransition {
-    static let pegChooser = AnyTransition.offset(x: 0, y: 200)
-    static func attempt(_ isOver: Bool) -> AnyTransition {
-        AnyTransition.asymmetric(
-            insertion: isOver ? .opacity : .move(edge: .top),
-            removal: .move(edge: .trailing))
-    }
-}
-
-extension Color {
-    static func gray(_ brightness: CGFloat) -> Color {
-        return Color(hue: 148/360, saturation: 0 ,brightness: brightness)
-    }
-    
-    static func toColor(_ name: String) -> Color {
-        switch name {
-        case "red":
-            return Color.red
-        case "orange":
-            return Color.orange
-        case "yellow":
-            return Color.yellow
-        case "cyan":
-            return Color.cyan
-        case "blue":
-            return Color.blue
-        case "green":
-            return Color.green
-        case "purple":
-            return Color.purple
-        case "clear":
-            return Color.clear
-        default:
-            return Color.blue
-        }
     }
 }
 
