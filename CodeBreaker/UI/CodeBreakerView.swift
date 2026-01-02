@@ -10,7 +10,10 @@ import SwiftUI
 struct CodeBreakerView: View {
     // MARK: Data Owned by Me
     @State private var game = CodeBreaker.randomGame()
+    
     @State private var selection: Int = 0
+    @State private var restarting = false
+    @State private var hideMostRecentMarkers = false
     
     // MARK: - Body
     var body: some View {
@@ -23,17 +26,19 @@ struct CodeBreakerView: View {
                             guessButton
                         }
                         .animation(nil, value: game.attempts.count)
+                        .opacity(restarting ? 0 : 1)
                     }
                     ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                         CodeView(code: game.attempts[index]) {
-                            if let matches = game.attempts[index].matches {
+                            let showMarkers = !hideMostRecentMarkers || index != game.attempts.count - 1
+                            if showMarkers, let matches = game.attempts[index].matches {
                                 MatchMarkers(matches: matches)
                             }
                         }
                         .transition(.attempt(game.isOver))
                     }
                 }
-                if !game.isOver {
+                if !game.isOver  || restarting {
                     PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
                         .transition(.pegChooser)
                 }
@@ -43,8 +48,13 @@ struct CodeBreakerView: View {
             .toolbar {
                 Button {
                     withAnimation(.restart) {
-                        game.restart()
-                        selection = 0
+                        restarting = true
+                    } completion: {
+                        withAnimation(.restart) {
+                            game.restart()
+                            selection = 0
+                            restarting = false
+                        }
                     }
                 } label: {
                     Image(systemName: "arrow.trianglehead.counterclockwise")
@@ -64,6 +74,11 @@ struct CodeBreakerView: View {
             withAnimation(.guess){
                 game.attemptGuess()
                 selection = 0
+                hideMostRecentMarkers = true
+            } completion: {
+                withAnimation(.guess) {
+                    hideMostRecentMarkers = false
+                }
             }
         } label: {
             Text("Guess")
