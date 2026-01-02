@@ -22,6 +22,7 @@ struct CodeBreakerView: View {
                         CodeView(code: game.guess, selection: $selection) {
                             guessButton
                         }
+                        .animation(nil, value: game.attempts.count)
                     }
                     ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                         CodeView(code: game.attempts[index]) {
@@ -29,6 +30,7 @@ struct CodeBreakerView: View {
                                 MatchMarkers(matches: matches)
                             }
                         }
+                        .transition(.attempt(game.isOver))
                     }
                 }
                 if !game.isOver {
@@ -87,13 +89,18 @@ struct CodeBreakerView: View {
 }
 
 extension Animation {
-    static let codeBreaker = Animation.easeInOut(duration: 1)
+    static let codeBreaker = Animation.easeInOut(duration: 0.5)
     static let guess = Animation.codeBreaker
     static let restart = Animation.codeBreaker
 }
 
 extension AnyTransition {
     static let pegChooser = AnyTransition.offset(x: 0, y: 200)
+    static func attempt(_ isOver: Bool) -> AnyTransition {
+        AnyTransition.asymmetric(
+            insertion: isOver ? .opacity : .move(edge: .top),
+            removal: .move(edge: .trailing))
+    }
 }
 
 extension Color {
