@@ -31,7 +31,12 @@ struct CodeBreakerView: View {
                         }
                     }
                 }
-                PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
+                if !game.isOver {
+                    PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
+                    
+                        .transition(.offset(x: 0, y: 200))
+                        
+                }
             }
             .navigationTitle("CodeBreaker")
             .navigationBarTitleDisplayMode(.inline)
