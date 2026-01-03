@@ -62,6 +62,7 @@ struct CodeBreaker {
         guess.reset(masterCode.pegs.count)
         if isOver {
             masterCode.kind = .master(isHidden: false)
+            endTime = .now
         }
     }
     
@@ -93,5 +94,7 @@ struct CodeBreaker {
         masterCode.randomize(from: pegChoices)
         guess.reset(masterCode.pegs.count)
         attempts.removeAll()
+        startTime = .now
+        endTime = nil
     }
 }
