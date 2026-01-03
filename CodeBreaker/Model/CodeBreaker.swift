@@ -52,14 +52,14 @@ struct CodeBreaker {
     }
     
     var isOver: Bool {
-        attempts.last?.pegs == masterCode.pegs
+        attempts.first?.pegs == masterCode.pegs
     }
     
     mutating func attemptGuess() {
         guard !isAttempted(guess) else { return }
         var attempt = guess
         attempt.kind = .attempt(guess.match(against: masterCode))
-        attempts.append(attempt)
+        attempts.insert(attempt, at: 0)
         guess.reset(masterCode.pegs.count)
         if isOver {
             masterCode.kind = .master(isHidden: false)
