@@ -13,7 +13,7 @@ enum Peg: Hashable, Equatable {
     case empty
 }
 
-class CodeBreaker {
+@Observable class CodeBreaker {
     var name: String
     var numOfPegs: Int
     
