@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Code {
+struct Code: Hashable {
     var kind: Kind
     var pegs: [Peg]
     
@@ -18,7 +18,7 @@ struct Code {
     
     static let missingPeg: Peg = .empty
     
-    enum Kind: Equatable {
+    enum Kind: Hashable, Equatable {
         case master(isHidden: Bool)
         case guess
         case attempt([Match])

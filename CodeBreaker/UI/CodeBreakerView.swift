@@ -21,6 +21,9 @@ struct CodeBreakerView: View {
             VStack {
                 CodeView(code: game.masterCode) {
                     ElapsedTime(startTime: game.startTime, endTime: game.endTime)
+                        .flexibleSystemFont()
+                        .monospaced()
+                        .lineLimit(1)
                 }
                 ScrollView {
                     if !game.isOver {
@@ -31,10 +34,10 @@ struct CodeBreakerView: View {
                         .animation(nil, value: game.attempts.count)
                         .opacity(restarting ? 0 : 1)
                     }
-                    ForEach(game.attempts.indices.reversed(), id: \.self) { index in
-                        CodeView(code: game.attempts[index]) {
-                            let showMarkers = !hideMostRecentMarkers || index != game.attempts.count - 1
-                            if showMarkers, let matches = game.attempts[index].matches {
+                    ForEach(game.attempts.reversed(), id: \.self) { attempt in
+                        CodeView(code: attempt) {
+                            let showMarkers = !hideMostRecentMarkers || attempt.pegs != game.attempts.last?.pegs
+                            if showMarkers, let matches = attempt.matches {
                                 MatchMarkers(matches: matches)
                             }
                         }
