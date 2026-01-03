@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    // MARK: Data Owned by Me
-    @State private var game = CodeBreaker.randomGame()
+    // MARK: Data Shared with Me
+    @Binding var game: CodeBreaker
     
+    // MARK: Data Owned by Me
     @State private var selection: Int = 0
     @State private var restarting = false
     @State private var hideMostRecentMarkers = false
@@ -100,5 +101,6 @@ struct CodeBreakerView: View {
 }
 
 #Preview {
-    CodeBreakerView()
+    @Previewable @State var game = CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.color(.red), .color(.blue), .color(.yellow)])
+    CodeBreakerView(game: $game)
 }

@@ -12,14 +12,16 @@ struct GameChooser: View {
     @State private var games: [CodeBreaker] = []
     
     var body: some View {
-        List(games, id: \.pegChoices) { game in
-            VStack (alignment: .leading){
-                Text(game.name)
-                    .font(.headline)
-                PegChooser(choices: game.pegChoices)
-                    .frame(maxHeight: 50)
-                Text("^[\(game.attempts.count) attempt](inflect: true)")
+        NavigationStack {
+            List($games, id: \.pegChoices) { $game in
+                NavigationLink {
+                    CodeBreakerView(game: $game)
+                } label: {
+                    GameSummary(game: game)
+                }
             }
+            .listStyle(.plain)
+            .navigationTitle("CodeBreaker")
         }
         .onAppear {
             games.append(CodeBreaker(name: "Mastermind", numOfPegs: 4, pegChoices: [.color(.red), .color(.blue), .color(.green), .color(.yellow)]))
