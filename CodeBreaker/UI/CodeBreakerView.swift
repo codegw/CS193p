@@ -39,7 +39,7 @@ struct CodeBreakerView: View {
                         .transition(.attempt(game.isOver))
                     }
                 }
-                if !game.isOver  || restarting {
+                if !game.isOver {
                     PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
                         .transition(.pegChooser)
                 }
@@ -76,11 +76,11 @@ struct CodeBreakerView: View {
     
     func restart() {
         withAnimation(.restart) {
-            restarting = true
+            restarting = game.isOver
+            game.restart()
+            selection = 0
         } completion: {
             withAnimation(.restart) {
-                game.restart()
-                selection = 0
                 restarting = false
             }
         }
