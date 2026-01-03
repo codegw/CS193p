@@ -14,6 +14,7 @@ enum Peg: Hashable, Equatable {
 }
 
 struct CodeBreaker {
+    var name: String
     var numOfPegs: Int
     
     var masterCode: Code
@@ -30,7 +31,8 @@ struct CodeBreaker {
         [.emoji("🍎"), .emoji("🥑"), .emoji("🍍"), .emoji("🍓")]
     ]
     
-    init(numOfPegs: Int, pegChoices: [Peg]) {
+    init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Peg]) {
+        self.name = name
         self.numOfPegs = numOfPegs
         self.pegChoices = pegChoices
         self.masterCode = Code(kind: .master(isHidden: true), pegCount: numOfPegs)
