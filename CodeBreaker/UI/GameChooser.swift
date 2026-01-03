@@ -13,9 +13,9 @@ struct GameChooser: View {
     
     var body: some View {
         NavigationStack {
-            List($games, id: \.pegChoices, editActions: [.delete, .move]) { $game in
+            List(games, id: \.pegChoices) { game in
                 NavigationLink {
-                    CodeBreakerView(game: $game)
+                    CodeBreakerView(game: game)
                 } label: {
                     GameSummary(game: game)
                 }

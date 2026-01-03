@@ -13,7 +13,7 @@ enum Peg: Hashable, Equatable {
     case empty
 }
 
-struct CodeBreaker {
+class CodeBreaker {
     var name: String
     var numOfPegs: Int
     
@@ -57,7 +57,7 @@ struct CodeBreaker {
         attempts.first?.pegs == masterCode.pegs
     }
     
-    mutating func attemptGuess() {
+    func attemptGuess() {
         guard !isAttempted(guess) else { return }
         var attempt = guess
         attempt.kind = .attempt(guess.match(against: masterCode))
@@ -69,12 +69,12 @@ struct CodeBreaker {
         }
     }
     
-    mutating func setGuessPeg(_ peg: Peg, at index: Int) {
+    func setGuessPeg(_ peg: Peg, at index: Int) {
         guard guess.pegs.indices.contains(index) else { return }
         guess.pegs[index] = peg
     }
     
-    mutating func changeGuessPeg(at index: Int) {
+    func changeGuessPeg(at index: Int) {
         let existingPeg = guess.pegs[index]
         if let indexOfExistingPegInPegChoices = pegChoices.firstIndex(of: existingPeg) {
             let newPeg = pegChoices[(indexOfExistingPegInPegChoices + 1) % pegChoices.count]
@@ -92,7 +92,7 @@ struct CodeBreaker {
         !isAttempted(guess) && guess.isOnePegChosen()
     }
     
-    mutating func restart() {
+    func restart() {
         masterCode.kind = .master(isHidden: true)
         masterCode.randomize(from: pegChoices)
         guess.reset(masterCode.pegs.count)
