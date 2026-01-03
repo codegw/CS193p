@@ -21,6 +21,9 @@ struct CodeBreaker {
     var attempts: [Code] = []
     var pegChoices: [Peg]
     
+    var startTime: Date = Date.now
+    var endTime: Date?
+    
     let pegLibrary: [[Peg]] = [
         [.color(.red), .color(.green), .color(.blue), .color(.yellow)],
         [.emoji("😀"), .emoji("😊"), .emoji("🥰"), .emoji("😭")],
