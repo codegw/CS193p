@@ -13,7 +13,7 @@ enum Peg: Hashable, Equatable {
     case empty
 }
 
-@Observable class CodeBreaker: Identifiable {
+@Observable class CodeBreaker {
     var name: String
     var numOfPegs: Int
     
@@ -99,5 +99,15 @@ enum Peg: Hashable, Equatable {
         attempts.removeAll()
         startTime = .now
         endTime = nil
+    }
+}
+
+extension CodeBreaker: Identifiable, Hashable, Equatable {
+    static func == (lhs: CodeBreaker, rhs: CodeBreaker) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

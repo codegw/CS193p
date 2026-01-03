@@ -15,10 +15,11 @@ struct GameChooser: View {
         NavigationStack {
             List {
                 ForEach(games) { game in
-                    NavigationLink {
-                        CodeBreakerView(game: game)
-                    } label: {
+                    NavigationLink(value: game) {
                         GameSummary(game: game)
+                    }
+                    NavigationLink(value: game.masterCode.pegs) {
+                        Text("Cheat")
                     }
                 }
                 .onDelete { offsets in
@@ -27,6 +28,12 @@ struct GameChooser: View {
                 .onMove { offset, destination in
                     games.move(fromOffsets: offset, toOffset: destination)
                 }
+            }
+            .navigationDestination(for: CodeBreaker.self) { game in
+                CodeBreakerView(game: game)
+            }
+            .navigationDestination(for: [Peg].self) { pegs in
+                PegChooser(choices: pegs)
             }
             .listStyle(.plain)
             .navigationTitle("CodeBreaker")
