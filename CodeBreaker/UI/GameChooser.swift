@@ -13,7 +13,7 @@ struct GameChooser: View {
     
     var body: some View {
         NavigationStack {
-            List($games, id: \.pegChoices) { $game in
+            List($games, id: \.pegChoices, editActions: [.delete, .move]) { $game in
                 NavigationLink {
                     CodeBreakerView(game: $game)
                 } label: {
@@ -22,6 +22,9 @@ struct GameChooser: View {
             }
             .listStyle(.plain)
             .navigationTitle("CodeBreaker")
+            .toolbar {
+                EditButton()
+            }
         }
         .onAppear {
             games.append(CodeBreaker(name: "Mastermind", numOfPegs: 4, pegChoices: [.color(.red), .color(.blue), .color(.green), .color(.yellow)]))

@@ -20,12 +20,7 @@ struct CodeBreakerView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                CodeView(code: game.masterCode) {
-                    ElapsedTime(startTime: game.startTime, endTime: game.endTime)
-                        .flexibleSystemFont()
-                        .monospaced()
-                        .lineLimit(1)
-                }
+                CodeView(code: game.masterCode)
                 ScrollView {
                     if !game.isOver {
                         CodeView(code: game.guess, selection: $selection) {
@@ -50,13 +45,18 @@ struct CodeBreakerView: View {
                         .transition(.pegChooser)
                 }
             }
-            .navigationTitle("CodeBreaker")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button {
-                    restart()
-                } label: {
-                    Image(systemName: "arrow.trianglehead.counterclockwise")
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        restart()
+                    } label: {
+                        Image(systemName: "arrow.trianglehead.counterclockwise")
+                    }
+                }
+                ToolbarItem {
+                    ElapsedTime(startTime: game.startTime, endTime: game.endTime)
+                        .monospaced()
+                        .lineLimit(1)
                 }
             }
             .padding()
