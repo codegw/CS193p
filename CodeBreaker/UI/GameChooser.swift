@@ -10,10 +10,9 @@ import SwiftUI
 struct GameChooser: View {
     // MARK: Data Owned by Me
     @State private var games: [CodeBreaker] = []
-    @State private var columnVisibility:NavigationSplitViewVisibility = .all
     
     var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             List {
                 ForEach(games) { game in
                     NavigationLink(value: game) {
