@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GameChooser: View {
-    
     @State private var selection: CodeBreaker? = nil
     
     var body: some View {
@@ -25,7 +24,6 @@ struct GameChooser: View {
             }
         }
         .navigationSplitViewStyle(.balanced)
-        
     }
 }
 
