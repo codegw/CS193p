@@ -48,23 +48,7 @@ struct CodeBreakerView: View {
                         .frame(maxHeight: Selection.pegChooserHeight)
                 }
             }
-            .onAppear {
-                game.startTimer()
-            }
-            .onDisappear {
-                game.pauseTimer()
-            }
-            .onChange(of: game) { oldGame, newGame in
-                oldGame.pauseTimer()
-                newGame.startTimer()
-            }
-            .onChange(of: scenePhase) {
-                switch scenePhase {
-                case .active: game.startTimer()
-                case .background: game.pauseTimer()
-                default: break
-                }
-            }
+            .trackElapsedTime(in: game)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -118,6 +102,38 @@ struct CodeBreakerView: View {
         static let selectionColor: Color = Color.gray(0.85)
         static let shape = RoundedRectangle(cornerRadius: cornerRadius)
         static let pegChooserHeight: CGFloat = 100
+    }
+}
+
+extension View {
+    func trackElapsedTime(in game: CodeBreaker) -> some View {
+        self.modifier(ElapsedTimeTracker(game: game))
+    }
+}
+
+struct ElapsedTimeTracker: ViewModifier {
+    @Environment(\.scenePhase) var scenePhase
+    let game: CodeBreaker
+    
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                game.startTimer()
+            }
+            .onDisappear {
+                game.pauseTimer()
+            }
+            .onChange(of: game) { oldGame, newGame in
+                oldGame.pauseTimer()
+                newGame.startTimer()
+            }
+            .onChange(of: scenePhase) {
+                switch scenePhase {
+                case .active: game.startTimer()
+                case .background: game.pauseTimer()
+                default: break
+                }
+            }
     }
 }
 
