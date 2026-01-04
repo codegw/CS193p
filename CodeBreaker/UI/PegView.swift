@@ -19,18 +19,8 @@ struct PegView: View {
         pegShape
             .foregroundStyle(.white)
             .overlay {
-                switch peg {
-                case .color(let color):
-                    pegShape
-                        .foregroundStyle(color)
-                case .emoji(let emoji):
-                    Text(emoji)
-                        .font(.largeTitle)
-                
-                case .empty:
-                    pegShape
-                        .foregroundStyle(.clear)
-                }
+                pegShape
+                    .foregroundStyle(peg)
             }
             .contentShape(pegShape)
             .aspectRatio(1, contentMode: .fit)
@@ -38,6 +28,6 @@ struct PegView: View {
 }
 
 #Preview {
-    PegView(peg: .color(.blue))
+    PegView(peg: .blue)
         .padding()
 }

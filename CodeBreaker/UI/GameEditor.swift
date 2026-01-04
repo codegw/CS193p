@@ -12,13 +12,25 @@ struct GameEditor: View {
     
     var body: some View {
         Form {
-            TextField("Name", text: $game.name)
+            Section("Name") {
+                TextField("Name", text: $game.name)
+            }
+            Section("Pegs") {
+                List {
+                    ForEach(game.pegChoices.indices, id: \.self) { index in
+                        ColorPicker(selection: $game.pegChoices[index],
+                                    supportsOpacity: false) {
+                            Text("Peg Choice \(index + 1)")
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
-    let game = CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.color(.red), .color(.orange)])
+    @Previewable var game = CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.red, .orange])
     GameEditor(game: game)
         .onChange(of: game.name) {
             print("name changed to \(game.name)")

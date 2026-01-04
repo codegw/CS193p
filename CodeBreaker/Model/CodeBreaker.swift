@@ -7,11 +7,7 @@
 
 import SwiftUI
 
-enum Peg: Hashable, Equatable {
-    case color(Color)
-    case emoji(String)
-    case empty
-}
+typealias Peg = Color
 
 @Observable class CodeBreaker {
     var name: String
@@ -20,18 +16,12 @@ enum Peg: Hashable, Equatable {
     var masterCode: Code
     var guess: Code
     var attempts: [Code] = []
-    var pegChoices: [Peg]
+    var pegChoices: [Color]
     
     var startTime: Date = Date.now
     var endTime: Date?
     
-    let pegLibrary: [[Peg]] = [
-        [.color(.red), .color(.green), .color(.blue), .color(.yellow)],
-        [.emoji("😀"), .emoji("😊"), .emoji("🥰"), .emoji("😭")],
-        [.emoji("🍎"), .emoji("🥑"), .emoji("🍍"), .emoji("🍓")]
-    ]
-    
-    init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Peg]) {
+    init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Color]) {
         self.name = name
         self.numOfPegs = numOfPegs
         self.pegChoices = pegChoices
@@ -42,10 +32,8 @@ enum Peg: Hashable, Equatable {
     }
     
     static func randomGame() -> CodeBreaker {
-        let pegLibrary: [[Peg]] = [
-            [.color(.red), .color(.green), .color(.blue), .color(.yellow)],
-            [.emoji("😀"), .emoji("😊"), .emoji("🥰"), .emoji("😭")],
-            [.emoji("🍎"), .emoji("🥑"), .emoji("🍍"), .emoji("🍓")]
+        let pegLibrary: [[Color]] = [
+            [.red, .yellow, .orange, .cyan]
         ]
 
         let choices = pegLibrary.randomElement()!

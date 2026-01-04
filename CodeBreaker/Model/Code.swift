@@ -16,7 +16,7 @@ struct Code {
         self.pegs = Array(repeating: Code.missingPeg, count: pegCount)
     }
     
-    static let missingPeg: Peg = .empty
+    static let missingPeg: Peg = .clear
     
     enum Kind: Equatable {
         case master(isHidden: Bool)
@@ -25,7 +25,7 @@ struct Code {
         case unknown
     }
     
-    mutating func randomize(from pegChoices: [Peg]) {
+    mutating func randomize(from pegChoices: [Color]) {
         for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missingPeg
         }

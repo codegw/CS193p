@@ -103,6 +103,6 @@ struct CodeBreakerView: View {
 }
 
 #Preview {
-    @Previewable @State var game = CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.color(.red), .color(.blue), .color(.yellow)])
+    @Previewable @State var game = CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.red, .orange, .yellow, .cyan])
     CodeBreakerView(game: game)
 }
