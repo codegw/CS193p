@@ -10,9 +10,10 @@ import SwiftUI
 struct GameChooser: View {
     // MARK: Data Owned by Me
     @State private var games: [CodeBreaker] = []
+    @State private var columnVisibility:NavigationSplitViewVisibility = .all
     
     var body: some View {
-        NavigationStack {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List {
                 ForEach(games) { game in
                     NavigationLink(value: game) {
@@ -40,7 +41,10 @@ struct GameChooser: View {
             .toolbar {
                 EditButton()
             }
+        } detail: {
+            Text("Choose a game")
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear {
             games.append(CodeBreaker(name: "Mastermind", numOfPegs: 4, pegChoices: [.color(.red), .color(.blue), .color(.green), .color(.yellow)]))
             games.append(CodeBreaker(name: "Earth Tones", numOfPegs: 4, pegChoices: [.color(.orange), .color(.brown), .color(.black), .color(.yellow)]))
