@@ -18,8 +18,10 @@ typealias Peg = Color
     var attempts: [Code] = []
     var pegChoices: [Color]
     
-    var startTime: Date = Date.now
+    var startTime: Date?
     var endTime: Date?
+    
+    var elapsedTime: TimeInterval = 0
     
     init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Color]) {
         self.name = name
@@ -29,6 +31,19 @@ typealias Peg = Color
         self.guess = Code(kind: .guess, pegCount: numOfPegs)
 
         masterCode.randomize(from: pegChoices)
+    }
+    
+    func startTimer() {
+        if startTime == nil, !isOver {
+            startTime = .now
+        }
+    }
+    
+    func pauseTimer() {
+        if let startTime {
+            elapsedTime += Date.now.timeIntervalSince(startTime)
+        }
+        startTime = nil
     }
     
     static func randomGame() -> CodeBreaker {
@@ -54,7 +69,9 @@ typealias Peg = Color
         if isOver {
             masterCode.kind = .master(isHidden: false)
             endTime = .now
+            pauseTimer()
         }
+    
     }
     
     func setGuessPeg(_ peg: Peg, at index: Int) {
@@ -87,6 +104,7 @@ typealias Peg = Color
         attempts.removeAll()
         startTime = .now
         endTime = nil
+        elapsedTime = 0
     }
 }
 

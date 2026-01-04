@@ -46,6 +46,16 @@ struct CodeBreakerView: View {
                         .frame(maxHeight: Selection.pegChooserHeight)
                 }
             }
+            .onAppear {
+                game.startTimer()
+            }
+            .onDisappear {
+                game.pauseTimer()
+            }
+            .onChange(of: game) { oldGame, newGame in
+                oldGame.pauseTimer()
+                newGame.startTimer()
+            }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -55,7 +65,7 @@ struct CodeBreakerView: View {
                     }
                 }
                 ToolbarItem {
-                    ElapsedTime(startTime: game.startTime, endTime: game.endTime)
+                    ElapsedTime(startTime: game.startTime, endTime: game.endTime, elapsedTime: game.elapsedTime)
                         .monospaced()
                         .lineLimit(1)
                 }
