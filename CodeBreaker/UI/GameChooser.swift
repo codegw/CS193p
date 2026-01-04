@@ -10,16 +10,14 @@ import SwiftUI
 struct GameChooser: View {
     // MARK: Data Owned by Me
     @State private var games: [CodeBreaker] = []
+    @State private var selection: CodeBreaker? = nil
     
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            List {
+            List(selection: $selection) {
                 ForEach(games) { game in
                     NavigationLink(value: game) {
                         GameSummary(game: game)
-                    }
-                    NavigationLink(value: game.masterCode.pegs) {
-                        Text("Cheat")
                     }
                 }
                 .onDelete { offsets in
@@ -29,19 +27,19 @@ struct GameChooser: View {
                     games.move(fromOffsets: offset, toOffset: destination)
                 }
             }
-            .navigationDestination(for: CodeBreaker.self) { game in
-                CodeBreakerView(game: game)
-            }
-            .navigationDestination(for: [Peg].self) { pegs in
-                PegChooser(choices: pegs)
-            }
             .listStyle(.plain)
             .navigationTitle("CodeBreaker")
             .toolbar {
                 EditButton()
             }
         } detail: {
-            Text("Choose a game")
+            if let selection {
+                CodeBreakerView(game: selection)
+                    .navigationTitle(selection.name)
+                    .navigationBarTitleDisplayMode(.inline)
+            } else {
+                Text("Choose a game")
+            }
         }
         .navigationSplitViewStyle(.balanced)
         .onAppear {

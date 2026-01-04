@@ -43,6 +43,7 @@ struct CodeBreakerView: View {
                 if !game.isOver {
                     PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
                         .transition(.pegChooser)
+                        .frame(maxHeight: Selection.pegChooserHeight)
                 }
             }
             .toolbar {
@@ -97,6 +98,7 @@ struct CodeBreakerView: View {
         static let cornerRadius: CGFloat = 10
         static let selectionColor: Color = Color.gray(0.85)
         static let shape = RoundedRectangle(cornerRadius: cornerRadius)
+        static let pegChooserHeight: CGFloat = 100
     }
 }
 
