@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct GameEditor: View {
-    let game: CodeBreaker
+    @Bindable var game: CodeBreaker
     
     var body: some View {
-        Text(game.name)
+        Form {
+            TextField("Name", text: $game.name)
+        }
     }
 }
 
