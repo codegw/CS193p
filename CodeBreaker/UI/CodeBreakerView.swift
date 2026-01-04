@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
+    @Environment(\.scenePhase) var scenePhase
+    
     // MARK: Data Shared with Me
     let game: CodeBreaker
     
@@ -55,6 +57,13 @@ struct CodeBreakerView: View {
             .onChange(of: game) { oldGame, newGame in
                 oldGame.pauseTimer()
                 newGame.startTimer()
+            }
+            .onChange(of: scenePhase) {
+                switch scenePhase {
+                case .active: game.startTimer()
+                case .background: game.pauseTimer()
+                default: break
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
