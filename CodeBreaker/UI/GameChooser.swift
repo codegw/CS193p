@@ -34,6 +34,11 @@ struct GameChooser: View {
                     games.move(fromOffsets: offset, toOffset: destination)
                 }
             }
+            .onChange(of: games) {
+                if let selection, !games.contains(selection) {
+                    self.selection = nil
+                }
+            }
             .listStyle(.plain)
             .navigationTitle("CodeBreaker")
             .toolbar {
