@@ -19,6 +19,13 @@ struct GameChooser: View {
                     NavigationLink(value: game) {
                         GameSummary(game: game)
                     }
+                    .contextMenu {
+                        Button("Delete", systemImage: "minus.circle", role: .destructive) {
+                            withAnimation {
+                                games.removeAll { $0 == game }
+                            }
+                        }
+                    }
                 }
                 .onDelete { offsets in
                     games.remove(atOffsets: offsets)
