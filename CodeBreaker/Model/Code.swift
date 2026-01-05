@@ -10,8 +10,17 @@ import SwiftData
 import SwiftUI
 
 @Model class Code {
-    var kind: Kind
+    var _kind: String
     var pegs: [Peg]
+    
+    var kind: Kind {
+        get {
+            return Kind(_kind)
+        }
+        set {
+            _kind = newValue.description
+        }
+    }
     
     init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
         self.kind = kind
@@ -19,13 +28,6 @@ import SwiftUI
     }
     
     static let missingPeg: Peg = .clear
-    
-    enum Kind: Equatable, Codable {
-        case master(isHidden: Bool)
-        case guess
-        case attempt([Match])
-        case unknown
-    }
     
     func randomize(from pegChoices: [Color]) {
         for index in pegs.indices {
@@ -77,7 +79,7 @@ import SwiftUI
     }
 }
 
-enum Match: Codable {
+enum Match: String {
     case nomatch
     case exact
     case inexact
