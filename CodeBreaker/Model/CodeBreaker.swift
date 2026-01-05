@@ -5,27 +5,33 @@
 //  Created by Gabriel Williams on 26/12/2025.
 //
 
-import SwiftUI
+import Foundation
 import SwiftData
 
-typealias Peg = Color
+typealias Peg = String
 
 @Model class CodeBreaker {
     var name: String
     var numOfPegs: Int
-    @Relationship(deleteRule: .cascade) var masterCode: Code = Code(kind: .master(isHidden: true))
-    @Relationship(deleteRule: .cascade) var guess: Code = Code(kind: .guess)
-    @Relationship(deleteRule: .cascade) var attempts: [Code] = []
+    @Relationship(deleteRule: .cascade) var masterCode: Code
+    @Relationship(deleteRule: .cascade) var guess: Code
+    @Relationship(deleteRule: .cascade) var attempts: [Code]
+    
     var pegChoices: [Peg]
     @Transient var startTime: Date?
     var endTime: Date?
     
     var elapsedTime: TimeInterval = 0
     
-    init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Color]) {
+    init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Peg]) {
         self.name = name
-        self.numOfPegs = numOfPegs
+        self.numOfPegs = numOfPegs 
         self.pegChoices = pegChoices
+        
+        self.masterCode = Code(kind: .master(isHidden: true))
+        self.guess = Code(kind: .guess)
+        self.attempts = []
+        
         masterCode.randomize(from: pegChoices)
     }
     
@@ -40,16 +46,6 @@ typealias Peg = Color
             elapsedTime += Date.now.timeIntervalSince(startTime)
         }
         startTime = nil
-    }
-    
-    static func randomGame() -> CodeBreaker {
-        let pegLibrary: [[Color]] = [
-            [.red, .yellow, .orange, .cyan]
-        ]
-
-        let choices = pegLibrary.randomElement()!
-        let count = Int.random(in: 3...6)
-        return CodeBreaker(numOfPegs: count, pegChoices: choices)
     }
     
     var isOver: Bool {

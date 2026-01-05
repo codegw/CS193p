@@ -58,7 +58,7 @@ struct GameList: View {
     
     var addButton: some View {
         Button("Add Game", systemImage: "plus") {
-            gameToEdit = CodeBreaker(name: "Untitled", numOfPegs: 4, pegChoices: [.red, .blue])
+            gameToEdit = CodeBreaker(name: "Untitled", pegChoices: [.red, .yellow, .blue])
         }
         .sheet(isPresented: showGameEditor) {
             gameEditor
@@ -100,9 +100,9 @@ struct GameList: View {
     
     func addSampleGames() {
         if games.isEmpty {
-            games.append(CodeBreaker(name: "Mastermind", numOfPegs: 4, pegChoices: [.red, .yellow, .blue, .green]))
-            games.append(CodeBreaker(name: "Earth Tones", numOfPegs: 4, pegChoices: [.orange, .brown, .black, .yellow]))
-            games.append(CodeBreaker(name: "Undersea", numOfPegs: 4, pegChoices: [.blue, .indigo, .cyan]))
+            games.append(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
+            games.append(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
+            games.append(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
             selection = games.first
         }
     }

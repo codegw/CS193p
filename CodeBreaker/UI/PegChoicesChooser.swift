@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PegChoicesChooser: View {
     // MARK: Data Shared with Me
-    @Binding var pegChoices: [Peg]
+    @Binding var pegChoices: [Color]
     var body: some View {
         List {
             ForEach(pegChoices.indices, id: \.self) { index in
@@ -50,7 +50,7 @@ struct PegChoicesChooser: View {
 }
 
 #Preview {
-    @Previewable @State var pegChoices: [Peg] = [.green, .orange]
+    @Previewable @State var pegChoices: [Color] = [.red, .yellow, .blue]
     PegChoicesChooser(pegChoices: $pegChoices)
         .onChange(of: pegChoices) {
             print("pegChoices = \(pegChoices)")

@@ -22,10 +22,10 @@ struct GameSummary: View {
 
 #Preview {
     List {
-        GameSummary(game: CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.red, .yellow, .blue]))
+        GameSummary(game: CodeBreaker(name: "Preview", pegChoices: [.red, .yellow, .blue]))
     }
     List {
-        GameSummary(game: CodeBreaker(name: "Preview", numOfPegs: 4, pegChoices: [.red, .yellow, .blue]))
+        GameSummary(game: CodeBreaker(name: "Preview", pegChoices: [.red, .yellow, .blue]))
     }
     .listStyle(.plain)
 }

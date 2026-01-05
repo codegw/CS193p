@@ -47,7 +47,30 @@ extension Color {
         case "clear":
             return Color.clear
         default:
-            return Color.blue
+            return Color.clear
+        }
+    }
+    
+    static func toString(_ color: Color) -> String {
+        switch color {
+        case .red:
+            return "red"
+        case .orange:
+            return "orange"
+        case .yellow:
+            return "yellow"
+        case .cyan:
+            return "cyan"
+        case .blue:
+            return "blue"
+        case .green:
+            return "green"
+        case .purple:
+            return "purple"
+        case .clear:
+            return "clear"
+        default:
+            return "clear"
         }
     }
 }

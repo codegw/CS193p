@@ -14,6 +14,7 @@ struct GameChooser: View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             GameList(selection: $selection)
                 .navigationTitle("CodeBreaker")
+                .navigationBarTitleDisplayMode(.inline)
         } detail: {
             if let selection {
                 CodeBreakerView(game: selection)

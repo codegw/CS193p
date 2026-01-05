@@ -7,10 +7,9 @@
 
 import Foundation
 import SwiftData
-import SwiftUI
 
 @Model class Code {
-    var _kind: String
+    var _kind: String = Kind.unknown.description
     var pegs: [Peg]
     
     var kind: Kind {
@@ -23,13 +22,13 @@ import SwiftUI
     }
     
     init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
-        self.kind = kind
         self.pegs = pegs
+        self.kind = kind
     }
     
-    static let missingPeg: Peg = .clear
+    static let missingPeg: Peg = ""
     
-    func randomize(from pegChoices: [Color]) {
+    func randomize(from pegChoices: [String]) {
         for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missingPeg
         }

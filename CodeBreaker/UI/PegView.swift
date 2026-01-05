@@ -20,7 +20,7 @@ struct PegView: View {
             .foregroundStyle(.white)
             .overlay {
                 pegShape
-                    .foregroundStyle(peg)
+                    .foregroundStyle(Color.toColor(peg))
             }
             .contentShape(pegShape)
             .aspectRatio(1, contentMode: .fit)
@@ -28,6 +28,6 @@ struct PegView: View {
 }
 
 #Preview {
-    PegView(peg: .blue)
+    PegView(peg: "blue")
         .padding()
 }
