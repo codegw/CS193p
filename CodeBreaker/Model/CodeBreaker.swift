@@ -13,13 +13,11 @@ typealias Peg = Color
 @Model class CodeBreaker {
     var name: String
     var numOfPegs: Int
-    
-    var masterCode: Code
-    var guess: Code
-    var attempts: [Code] = []
+    @Relationship(deleteRule: .cascade) var masterCode: Code = Code(kind: .master(isHidden: true))
+    @Relationship(deleteRule: .cascade) var guess: Code = Code(kind: .guess)
+    @Relationship(deleteRule: .cascade) var attempts: [Code] = []
     var pegChoices: [Peg]
-    
-    var startTime: Date?
+    @Transient var startTime: Date?
     var endTime: Date?
     
     var elapsedTime: TimeInterval = 0
@@ -28,9 +26,6 @@ typealias Peg = Color
         self.name = name
         self.numOfPegs = numOfPegs
         self.pegChoices = pegChoices
-        self.masterCode = Code(kind: .master(isHidden: true))
-        self.guess = Code(kind: .guess)
-
         masterCode.randomize(from: pegChoices)
     }
     
