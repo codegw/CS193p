@@ -2,7 +2,7 @@
   <img width="200" height="200" src="assets/CS193p.png" alt= "CS193p Icon">
   <h1>CS193p</h1>
   <p>
-    Projects created for the online version of Stanford's CS193p - Developing Apps for iOS course for 2023
+    Projects created for the online version of Stanford's CS193p - Developing Apps for iOS course
   </p>
 </div>
 
@@ -10,11 +10,13 @@
 
 ## Overview
 
-This repository contains my implementations of the core projects from Stanford's CS193p course, demonstrating progressive learning of iOS development concepts and SwiftUI patterns.
+This repository contains implementations of the core projects from Stanford's CS193p course, focusing on core iOS development concepts and SwiftUI patterns.
 
 <img src="assets/CS193pProjects.png" alt= "Memorize and Emoji Art Applications from course">
 
-## Projects
+---
+
+## 2023
 
 ### 🃏 Memorize!
 A card-matching memory game that explores:
@@ -34,26 +36,19 @@ A creative art app featuring:
 
 <img src="assets/EmojiArt.png" alt= "EmojiArt application">
 
-## Key Learning Outcomes
-
-- **SwiftUI Learning**: Built proficiency in declarative UI development
-- **Architecture**: Implemented MVVM patterns for scalable app design
-- **State Management**: Understood @State, @ObservableObject, and data flow
-- **iOS Fundamentals**: Explored view lifecycle, navigation, and system integration
-- **Best Practices**: Applied clean code principles and iOS design guidelines
-
-In addition to the course, creating notes also helped me document my journey, which reinforced my understanding and retention of the concepts learned. 
-
-<img src="assets/NotesPages.png" alt= "Notes about the applications for the course">
-
 ---
 
-## Information
-Course materials and assignments are © Stanford University. 
-Original course content available at [cs193p.stanford.edu/2023 ↗](https://cs193p.stanford.edu/2023)
+## About
 
-Find a 2025 update to the course here [cs193p.stanford.edu/2023 ↗](https://cs193p.stanford.edu/2023)
+Learn more about [Stanford CS193p ↗](https://cs193p.stanford.edu/about-cs193p)
 
-These implementations are my own work completed for educational purposes
+2023 course content available at [cs193p.stanford.edu/2023 ↗](https://cs193p.stanford.edu/2023)
 
-These projects were completed in 2024. Some Swift syntax may reflect course timing and could be updated with newer iOS versions.
+2025 course content available at [cs193p.stanford.edu/2025 ↗](https://cs193p.stanford.edu/2025)
+
+The original course materials are licensed under [Creative Commons BY-NC-SA ↗](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+This repository contains modified and original implementations based on the course material.
+Changes were made for educational purposes, and the code structure, APIs, and Swift syntax may differ from the original content or reflect updates in newer iOS versions.
+
+© Stanford University. All original course materials remain the property of Stanford University.
