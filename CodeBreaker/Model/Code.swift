@@ -20,7 +20,7 @@ import SwiftUI
     
     static let missingPeg: Peg = .clear
     
-    enum Kind: Equatable {
+    enum Kind: Equatable, Codable {
         case master(isHidden: Bool)
         case guess
         case attempt([Match])
@@ -75,4 +75,10 @@ import SwiftUI
     func isOnePegChosen() -> Bool {
         pegs.contains { $0 != Code.missingPeg }
     }
+}
+
+enum Match: Codable {
+    case nomatch
+    case exact
+    case inexact
 }
