@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 typealias Peg = Color
 
-@Observable class CodeBreaker {
+@Model class CodeBreaker {
     var name: String
     var numOfPegs: Int
     
     var masterCode: Code
     var guess: Code
     var attempts: [Code] = []
-    var pegChoices: [Color]
+    var pegChoices: [Peg]
     
     var startTime: Date?
     var endTime: Date?
@@ -27,8 +28,8 @@ typealias Peg = Color
         self.name = name
         self.numOfPegs = numOfPegs
         self.pegChoices = pegChoices
-        self.masterCode = Code(kind: .master(isHidden: true), pegCount: numOfPegs)
-        self.guess = Code(kind: .guess, pegCount: numOfPegs)
+        self.masterCode = Code(kind: .master(isHidden: true))
+        self.guess = Code(kind: .guess)
 
         masterCode.randomize(from: pegChoices)
     }
@@ -62,8 +63,7 @@ typealias Peg = Color
     
     func attemptGuess() {
         guard !isAttempted(guess) else { return }
-        var attempt = guess
-        attempt.kind = .attempt(guess.match(against: masterCode))
+        let attempt = Code(kind: .attempt(guess.match(against: masterCode)), pegs: guess.pegs)
         attempts.insert(attempt, at: 0)
         guess.reset(masterCode.pegs.count)
         if isOver {
@@ -71,7 +71,6 @@ typealias Peg = Color
             endTime = .now
             pauseTimer()
         }
-    
     }
     
     func setGuessPeg(_ peg: Peg, at index: Int) {
@@ -105,15 +104,5 @@ typealias Peg = Color
         startTime = .now
         endTime = nil
         elapsedTime = 0
-    }
-}
-
-extension CodeBreaker: Identifiable, Hashable, Equatable {
-    static func == (lhs: CodeBreaker, rhs: CodeBreaker) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }

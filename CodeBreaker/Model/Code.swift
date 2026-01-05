@@ -5,15 +5,17 @@
 //  Created by Gabriel Williams on 29/12/2025.
 //
 
+import Foundation
+import SwiftData
 import SwiftUI
 
-struct Code {
+@Model class Code {
     var kind: Kind
     var pegs: [Peg]
     
-    init(kind: Kind, pegCount: Int) {
+    init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
         self.kind = kind
-        self.pegs = Array(repeating: Code.missingPeg, count: pegCount)
+        self.pegs = pegs
     }
     
     static let missingPeg: Peg = .clear
@@ -25,7 +27,7 @@ struct Code {
         case unknown
     }
     
-    mutating func randomize(from pegChoices: [Color]) {
+    func randomize(from pegChoices: [Color]) {
         for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missingPeg
         }
@@ -38,7 +40,7 @@ struct Code {
         }
     }
     
-    mutating func reset(_ pegCount: Int) {
+    func reset(_ pegCount: Int) {
         pegs = Array(repeating: Code.missingPeg, count: pegCount)
     }
     
