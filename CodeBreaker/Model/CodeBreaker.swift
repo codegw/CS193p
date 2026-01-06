@@ -54,7 +54,10 @@ typealias Peg = String
         startTime = nil
     }
     
-    
+    func updateElapsedTime() {
+        pauseTimer()
+        startTimer()
+    }
     
     func attemptGuess() {
         guard !isAttempted(guess) else { return }
