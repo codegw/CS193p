@@ -38,6 +38,7 @@ typealias Peg = String
     func startTimer() {
         if startTime == nil, !isOver {
             startTime = .now
+            elapsedTime += 0.00001
         }
     }
     
