@@ -15,13 +15,17 @@ typealias Peg = String
     var numOfPegs: Int
     @Relationship(deleteRule: .cascade) var masterCode: Code
     @Relationship(deleteRule: .cascade) var guess: Code
-    @Relationship(deleteRule: .cascade) var attempts: [Code]
+    @Relationship(deleteRule: .cascade) var _attempts: [Code]
     
     var pegChoices: [Peg]
     @Transient var startTime: Date?
     var endTime: Date?
-    
     var elapsedTime: TimeInterval = 0
+    
+    var attempts: [Code] {
+        get { _attempts.sorted { $0.timeStamp > $1.timeStamp }}
+        set { _attempts = newValue }
+    }
     
     init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Peg]) {
         self.name = name
