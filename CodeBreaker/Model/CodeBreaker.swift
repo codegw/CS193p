@@ -15,7 +15,7 @@ typealias Peg = String
     var numOfPegs: Int = 4
     @Relationship(deleteRule: .cascade) var masterCode: Code = Code(kind: .master(isHidden: true))
     @Relationship(deleteRule: .cascade) var guess: Code = Code(kind: .guess)
-    @Relationship(deleteRule: .cascade) var _attempts: [Code] = []
+    @Relationship(deleteRule: .cascade, inverse: \Code.game) var _attempts: [Code] = []
     
     var pegChoices: [Peg] = []
     @Transient var startTime: Date?
