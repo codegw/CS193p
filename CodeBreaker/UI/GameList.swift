@@ -88,7 +88,7 @@ struct GameList: View {
             addButton
             EditButton() // Editing list of games
         }
-        .onAppear { addSampleGames() }
+        .task { await addSampleGames() }
     }
     
     var summarySizeMagnifier: some Gesture {
@@ -149,15 +149,27 @@ struct GameList: View {
         }
     }
     
-    func addSampleGames() {
+    func addSampleGames() async {
         let fetchDescriptor = FetchDescriptor<CodeBreaker>()
         
         let results = try? modelContext.fetchCount(fetchDescriptor)
         if results == 0 {
-            modelContext.insert(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
-            modelContext.insert(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
-            modelContext.insert(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
+            for url in sampleGameURLS {
+                do {
+                    let (json, _) = try await URLSession.shared.data(from: url)
+                    let game = try JSONDecoder().decode(CodeBreaker.self, from: json)
+                    modelContext.insert(game)
+                    print("Loaded sample game from \(url)")
+                } catch {
+                    print("Couldn't load sample game from JSON file at \(url): \(error.localizedDescription)")
+                }
+            }
         }
+    }
+    
+    var sampleGameURLS: [URL] {
+        Bundle.main.paths(forResourcesOfType: "json", inDirectory: nil)
+            .map { URL(fileURLWithPath: $0 )}
     }
 }
 
