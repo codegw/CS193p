@@ -17,13 +17,9 @@ struct PegView: View {
     
     var body: some View {
         pegShape
-            .foregroundStyle(.white)
-            .overlay {
-                pegShape
-                    .foregroundStyle(Color(hex: peg) ?? .clear)
-            }
             .contentShape(pegShape)
             .aspectRatio(1, contentMode: .fit)
+            .foregroundStyle(Color(hex: peg) ?? .clear)
     }
 }
 

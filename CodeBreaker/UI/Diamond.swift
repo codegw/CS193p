@@ -17,8 +17,6 @@ struct Diamond: Shape {
             path.closeSubpath()
         }
     }
-    
-    
 }
 
 #Preview {
