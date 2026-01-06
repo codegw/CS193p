@@ -67,6 +67,12 @@ struct CodeBreakerView: View {
                 ToolbarItem {
                     Button("Save", systemImage: "square.and.arrow.down") {
                         //Write a JSON of this game out into documents directory
+                        if let json = try? JSONEncoder().encode(game) {
+                            let url = URL.documentsDirectory
+                                .appendingPathComponent(game.name)
+                                .appendingPathExtension("json")
+                            try? json.write(to: url)
+                        }
                     }
                 }
                 ToolbarItem {

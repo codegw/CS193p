@@ -10,14 +10,14 @@ import SwiftData
 
 typealias Peg = String
 
-@Model class CodeBreaker {
-    var name: String
-    var numOfPegs: Int
-    @Relationship(deleteRule: .cascade) var masterCode: Code
-    @Relationship(deleteRule: .cascade) var guess: Code
+@Model final class CodeBreaker {
+    var name: String = ""
+    var numOfPegs: Int = 4
+    @Relationship(deleteRule: .cascade) var masterCode: Code = Code(kind: .master(isHidden: true))
+    @Relationship(deleteRule: .cascade) var guess: Code = Code(kind: .guess)
     @Relationship(deleteRule: .cascade) var _attempts: [Code] = []
     
-    var pegChoices: [Peg]
+    var pegChoices: [Peg] = []
     @Transient var startTime: Date?
     var endTime: Date?
     var elapsedTime: TimeInterval = 0
@@ -29,14 +29,12 @@ typealias Peg = String
         set { _attempts = newValue }
     }
     
+    init() { }
+    
     init(name: String = "Code Breaker", numOfPegs: Int, pegChoices: [Peg]) {
         self.name = name
         self.numOfPegs = numOfPegs 
         self.pegChoices = pegChoices
-        
-        self.masterCode = Code(kind: .master(isHidden: true))
-        self.guess = Code(kind: .guess)
-        
         masterCode.randomize(from: pegChoices)
     }
     
