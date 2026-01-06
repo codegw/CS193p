@@ -100,10 +100,16 @@ struct GameList: View {
     }
     
     func addSampleGames() {
-        if games.isEmpty {
-            modelContext.insert(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
-            modelContext.insert(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
-            modelContext.insert(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
+        let fetchDescriptor = FetchDescriptor<CodeBreaker>()
+        do {
+            let results = try modelContext.fetch(fetchDescriptor)
+            if results.count == 0 {
+                modelContext.insert(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
+                modelContext.insert(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
+                modelContext.insert(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
+            }
+        } catch {
+            print("Error: Problem counting games: \(error.localizedDescription)")
         }
     }
 }
