@@ -65,6 +65,11 @@ struct CodeBreakerView: View {
                     }
                 }
                 ToolbarItem {
+                    Button("Save", systemImage: "square.and.arrow.down") {
+                        //Write a JSON of this game out into documents directory
+                    }
+                }
+                ToolbarItem {
                     ElapsedTime(startTime: game.startTime, endTime: game.endTime, elapsedTime: game.elapsedTime)
                         .monospaced()
                         .lineLimit(1)
