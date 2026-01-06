@@ -108,7 +108,7 @@ struct GameList: View {
     }
 }
 
-#Preview {
+#Preview(traits: .swiftData) {
     @Previewable @State var selection: CodeBreaker?
     NavigationStack {
         GameList(selection: $selection)
