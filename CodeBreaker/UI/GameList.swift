@@ -9,6 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct GameList: View {
+    // MARK: Data In
+    @Environment(\.modelContext) var modelContext
+    
     // MARK: Data Shared with Me
     @Binding var selection: CodeBreaker?
     @Query(sort: \CodeBreaker.name, order: .forward) private var games: [CodeBreaker]
@@ -31,10 +34,9 @@ struct GameList: View {
                 }
             }
             .onDelete { offsets in
-                games.remove(atOffsets: offsets)
-            }
-            .onMove { offset, destination in
-                games.move(fromOffsets: offset, toOffset: destination)
+                for offset in offsets {
+                    modelContext.delete(games[offset])
+                }
             }
         }
         .onChange(of: games) {
@@ -70,11 +72,10 @@ struct GameList: View {
         if let gameToEdit {
             let copyOfGameToEdit = CodeBreaker(name: gameToEdit.name, numOfPegs: gameToEdit.numOfPegs, pegChoices: gameToEdit.pegChoices)
             GameEditor(game: copyOfGameToEdit) {
-                if let index = games.firstIndex(of: gameToEdit) {
-                    games[index] = copyOfGameToEdit
-                } else {
-                    games.insert(gameToEdit, at: 0)
+                if games.contains(gameToEdit) {
+                    modelContext.delete(gameToEdit)
                 }
+                modelContext.insert(copyOfGameToEdit)
             }
         }
     }
@@ -93,17 +94,16 @@ struct GameList: View {
     func deleteButton(for game: CodeBreaker) -> some View {
         Button("Delete", systemImage: "minus.circle", role: .destructive) {
             withAnimation {
-                games.removeAll { $0 == game }
+                modelContext.delete(game)
             }
         }
     }
     
     func addSampleGames() {
         if games.isEmpty {
-            games.append(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
-            games.append(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
-            games.append(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
-            selection = games.first
+            modelContext.insert(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
+            modelContext.insert(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
+            modelContext.insert(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
         }
     }
 }
