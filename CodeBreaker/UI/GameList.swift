@@ -14,10 +14,37 @@ struct GameList: View {
     
     // MARK: Data Shared with Me
     @Binding var selection: CodeBreaker?
-    @Query(sort: \CodeBreaker.name, order: .forward) private var games: [CodeBreaker]
+    @Query private var games: [CodeBreaker]
     
     // MARK: Data Owned by Me
     @State private var gameToEdit: CodeBreaker?
+    
+    init(sortBy: SortOption = .name, nameContains search: String = "", selection: Binding<CodeBreaker?>) {
+        _selection = selection
+        
+        let lowercaseSearch = search.lowercased()
+        let capitalizedSearch = search.capitalized
+        let predicate = #Predicate<CodeBreaker> { game in
+            search.isEmpty || game.name.contains(lowercaseSearch) || game.name.contains(capitalizedSearch)
+        }
+        
+        switch sortBy {
+        case.name: _games = Query(filter: predicate, sort: \CodeBreaker.name)
+        case.recent: _games = Query(filter: predicate, sort: \CodeBreaker.lastAttemptDate, order: .reverse)
+        }
+    }
+    
+    enum SortOption: CaseIterable {
+        case name
+        case recent
+        
+        var title: String {
+            switch self {
+            case.name: "Name"
+            case.recent: "Recent"
+            }
+        }
+    }
     
     var body: some View {
         List(selection: $selection) {

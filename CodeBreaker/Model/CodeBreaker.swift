@@ -15,12 +15,13 @@ typealias Peg = String
     var numOfPegs: Int
     @Relationship(deleteRule: .cascade) var masterCode: Code
     @Relationship(deleteRule: .cascade) var guess: Code
-    @Relationship(deleteRule: .cascade) var _attempts: [Code]
+    @Relationship(deleteRule: .cascade) var _attempts: [Code] = []
     
     var pegChoices: [Peg]
     @Transient var startTime: Date?
     var endTime: Date?
     var elapsedTime: TimeInterval = 0
+    var lastAttemptDate: Date? = Date.now
     
     var attempts: [Code] {
         get { _attempts.sorted { $0.timeStamp > $1.timeStamp }}
@@ -34,7 +35,6 @@ typealias Peg = String
         
         self.masterCode = Code(kind: .master(isHidden: true))
         self.guess = Code(kind: .guess)
-        self.attempts = []
         
         masterCode.randomize(from: pegChoices)
     }
@@ -61,6 +61,7 @@ typealias Peg = String
         guard !isAttempted(guess) else { return }
         let attempt = Code(kind: .attempt(guess.match(against: masterCode)), pegs: guess.pegs)
         attempts.insert(attempt, at: 0)
+        lastAttemptDate = .now
         guess.reset(masterCode.pegs.count)
         if isOver {
             masterCode.kind = .master(isHidden: false)

@@ -9,17 +9,28 @@ import SwiftUI
 
 struct GameChooser: View {
     @State private var selection: CodeBreaker? = nil
+    @State private var sortOption: GameList.SortOption = .name
+    @State private var search: String = ""
     
     var body: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            GameList(selection: $selection)
+            Picker("Sort By", selection: $sortOption.animation()) {
+                ForEach(GameList.SortOption.allCases, id: \.self) { option in
+                    Text(option.title)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal)
+            GameList(sortBy: sortOption, nameContains: search, selection: $selection)
                 .navigationTitle("CodeBreaker")
                 .navigationBarTitleDisplayMode(.inline)
+                .searchable(text: $search)
         } detail: {
             if let selection {
                 CodeBreakerView(game: selection)
                     .navigationTitle(selection.name)
                     .navigationBarTitleDisplayMode(.inline)
+                    
             } else {
                 Text("Choose a game")
             }
