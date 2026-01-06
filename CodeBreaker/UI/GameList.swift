@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GameList: View {
     // MARK: Data Shared with Me
     @Binding var selection: CodeBreaker?
+    @Query(sort: \CodeBreaker.name, order: .forward) private var games: [CodeBreaker]
     
     // MARK: Data Owned by Me
-    @State private var games: [CodeBreaker] = []
-    
     @State private var gameToEdit: CodeBreaker?
     
     var body: some View {
