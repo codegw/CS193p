@@ -103,7 +103,7 @@ struct GameList: View {
         let fetchDescriptor = FetchDescriptor<CodeBreaker>()
         
         let results = try? modelContext.fetch(fetchDescriptor)
-        if let results, results.count == 0 {
+        if results?.count == 0 {
             modelContext.insert(CodeBreaker(name: "Mastermind", pegChoices: [.red, .yellow, .blue, .green]))
             modelContext.insert(CodeBreaker(name: "Earth Tones", pegChoices: [.orange, .brown, .black, .yellow]))
             modelContext.insert(CodeBreaker(name: "Undersea", pegChoices: [.blue, .indigo, .cyan]))
