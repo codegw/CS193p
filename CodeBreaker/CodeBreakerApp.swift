@@ -26,5 +26,5 @@ struct CodeBreakerApp: App {
 // main was deprecated in iOS 26.0, and had issues regarding iPadOS window sizes
 // Code here is to maintain lecture material
 extension EnvironmentValues {
-    @Entry var sceneFrame: CGRect = UIScreen.main.bounds
+    @Entry var sceneFrame: CGRect = .zero
 }

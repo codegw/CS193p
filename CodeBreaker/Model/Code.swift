@@ -8,10 +8,11 @@
 import Foundation
 import SwiftData
 
-@Model class Code {
+@Model final class Code {
     var _kind: String = Kind.unknown.description
-    var pegs: [Peg]
+    var pegs: [Peg] = []
     var timeStamp = Date.now
+    var game: CodeBreaker?
     
     var kind: Kind {
         get {
@@ -20,6 +21,10 @@ import SwiftData
         set {
             _kind = newValue.description
         }
+    }
+    
+    init() {
+        
     }
     
     init(kind: Kind, pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)) {
