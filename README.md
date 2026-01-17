@@ -10,16 +10,27 @@
 
 ## Overview
 
-This repository contains implementations of the core projects from Stanford's CS193p course, focusing on core iOS development concepts and SwiftUI patterns.
+This repository contains implementations of the core projects from Stanford's CS193p course, focusing on core iOS development concepts and SwiftUI patterns, from both 2023 and 2025. 
 
-<img src="assets/CS193pProjects.png" alt= "Memorize and Emoji Art Applications from course">
+---
+
+## 2025
+
+### 🔷 CodeBreaker
+A code guessing logic game using customizable colors, using modern Swift technologies:
+- SwiftData for model persistence and previews
+- Swift Concurrency (async/await, Task)
+- SwiftUI animation + transitions
+- Codable + JSON parsing for game data
+
+<img src="assets/CodeBreaker.png" alt= "CodeBreaker application">
 
 ---
 
 ## 2023
 
 ### 🃏 Memorize!
-A card-matching memory game that explores:
+A card matching memory game that explores:
 - SwiftUI fundamentals and declarative UI
 - MVVM architecture patterns
 - State management and data flow
