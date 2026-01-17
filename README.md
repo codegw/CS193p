@@ -23,7 +23,7 @@ A code guessing logic game using customizable colors, using modern Swift technol
 - SwiftUI animation + transitions
 - Codable + JSON parsing for game data
 
-<img src="assets/CodeBreaker.png" alt= "CodeBreaker application">
+<img width="500" src="assets/CodeBreaker.png" alt= "CodeBreaker application">
 
 ---
 
@@ -45,7 +45,7 @@ A creative art app featuring:
 - Complex gesture handling
 - Integration with system frameworks
 
-<img src="assets/EmojiArt.png" alt= "EmojiArt application">
+<img width="750" src="assets/EmojiArt.png" alt= "EmojiArt application">
 
 ---
 
