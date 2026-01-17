@@ -21,68 +21,53 @@ struct CodeBreakerView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            VStack {
-                CodeView(code: game.masterCode)
-                ScrollView {
-                    if !game.isOver {
-                        CodeView(code: game.guess, selection: $selection) {
-                            Button("Guess", action: guess).flexibleSystemFont()
-                                .disabled(!game.canSubmitGuess)
-                        }
-                        .animation(nil, value: game.attempts.count)
-                        .opacity(restarting ? 0 : 1)
+        VStack {
+            CodeView(code: game.masterCode)
+            ScrollView {
+                if !game.isOver {
+                    CodeView(code: game.guess, selection: $selection) {
+                        Button("Guess", action: guess).flexibleSystemFont()
                     }
-                    ForEach(game.attempts, id: \.pegs) { attempt in
-                        CodeView(code: attempt) {
-                            let showMarkers = !hideMostRecentMarkers || attempt.pegs != game.attempts.first?.pegs
-                            if showMarkers, let matches = attempt.matches {
-                                MatchMarkers(matches: matches)
-                            }
-                        }
-                        .transition(.attempt(game.isOver))
-                    }
+                    .animation(nil, value: game.attempts.count)
+                    .opacity(restarting ? 0 : 1)
                 }
-                GeometryReader { geometry in
-                    if !game.isOver {
-                        let offset = sceneFrame.maxY - geometry.frame(in: .global).minY
-                        PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
-                            .transition(.offset(x: 0, y: offset))
-                            .frame(maxHeight: Selection.pegChooserHeight)
-                    }
-                }
-                .frame(maxHeight: 90, alignment: .center)
-                .aspectRatio(CGFloat(game.pegChoices.count), contentMode: .fit)
-            }
-            .gesture(pegChoosingDial)
-            .trackElapsedTime(in: game)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        restart()
-                    } label: {
-                        Image(systemName: "arrow.trianglehead.counterclockwise")
-                    }
-                }
-                ToolbarItem {
-                    Button("Save", systemImage: "square.and.arrow.down") {
-                        //Write a JSON of this game out into documents directory
-                        if let json = try? JSONEncoder().encode(game) {
-                            let url = URL.documentsDirectory
-                                .appendingPathComponent(game.name)
-                                .appendingPathExtension("json")
-                            try? json.write(to: url)
+                ForEach(game.attempts, id: \.pegs) { attempt in
+                    CodeView(code: attempt) {
+                        let showMarkers = !hideMostRecentMarkers || attempt.pegs != game.attempts.first?.pegs
+                        if showMarkers, let matches = attempt.matches {
+                            MatchMarkers(matches: matches)
                         }
                     }
-                }
-                ToolbarItem {
-                    ElapsedTime(startTime: game.startTime, endTime: game.endTime, elapsedTime: game.elapsedTime)
-                        .monospaced()
-                        .lineLimit(1)
+                    .transition(.attempt(game.isOver))
                 }
             }
-            .padding()
+            GeometryReader { geometry in
+                if !game.isOver {
+                    let offset = sceneFrame.maxY - geometry.frame(in: .global).minY
+                    PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection)
+                        .transition(.offset(x: 0, y: offset))
+                }
+            }
+            .aspectRatio(CGFloat(game.pegChoices.count), contentMode: .fit)
+            .frame(maxHeight: 90)
         }
+        .highPriorityGesture(pegChoosingDial)
+        .trackElapsedTime(in: game)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    restart()
+                } label: {
+                    Image(systemName: "arrow.trianglehead.counterclockwise")
+                }
+            }
+            ToolbarItem {
+                ElapsedTime(startTime: game.startTime, endTime: game.endTime, elapsedTime: game.elapsedTime)
+                    .monospaced()
+                    .lineLimit(1)
+            }
+        }
+        .padding()
     }
     
     var pegChoosingDial: some Gesture {
@@ -145,4 +130,3 @@ extension CodeBreaker {
     @Previewable @State var game = CodeBreaker(name: "Preview", pegChoices: [.red, .orange, .yellow, .cyan])
     CodeBreakerView(game: game)
 }
-

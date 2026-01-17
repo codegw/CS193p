@@ -64,8 +64,9 @@ typealias Peg = String
         lastAttemptDate = .now
         guess.reset(masterCode.pegs.count)
         if attempts.first?.pegs == masterCode.pegs {
-            masterCode.kind = .master(isHidden: false)
+            isOver = true
             endTime = .now
+            masterCode.kind = .master(isHidden: false)
             pauseTimer()
         }
     }
