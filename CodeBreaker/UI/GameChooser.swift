@@ -31,7 +31,6 @@ struct GameChooser: View {
                 CodeBreakerView(game: selection)
                     .navigationTitle(selection.name)
                     .navigationBarTitleDisplayMode(.inline)
-                    
             } else {
                 Text("Choose a game")
             }
