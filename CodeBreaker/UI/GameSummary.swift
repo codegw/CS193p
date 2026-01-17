@@ -2,7 +2,7 @@
 //  GameSummary.swift
 //  CodeBreaker
 //
-//  Created by Gabriel Williams on 03/01/2026.
+//  Created by codegw on 03/01/2026.
 //
 
 import SwiftUI
